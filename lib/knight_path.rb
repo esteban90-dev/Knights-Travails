@@ -1,5 +1,5 @@
 class KnightPath
-  attr_reader :source_position
+  attr_reader :source
 
   def initialize(input=[0,0])
     @source = create_cell(input)
