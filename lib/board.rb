@@ -5,6 +5,10 @@ class Board
     @contents = create_grid(x,y)
   end
 
+  def contains?(input)
+    contents.any?{ |array| array.include?(input) }
+  end
+
   private
 
   def create_grid(x,y)
@@ -16,7 +20,6 @@ class Board
         grid[i][j] = [i,j]
         j += 1
       end
-      puts "#{grid[i]}"
       j = 0
       i += 1
     end
