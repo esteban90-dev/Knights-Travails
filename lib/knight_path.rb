@@ -1,9 +1,9 @@
 class KnightPath
   attr_reader :source, :board
 
-  def initialize(input=[0,0])
-    @source = create_cell(input)
-    @board = Board.new
+  def initialize(args)
+    @source = create_cell(args.fetch("position",[0,0]))
+    @board = args.fetch("board")
   end
 
   public
