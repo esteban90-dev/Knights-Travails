@@ -8,11 +8,6 @@ class KnightPath
 
   public
 
-  def possible_moves(cell)
-    #given a cell, return an array of possible moves
-    all_moves(cell).select{ |move| board.contains?(move) }
-  end
-
   def shortest_path(end_cell)
     #returns shortest path from start to end
     queue = []
@@ -40,17 +35,9 @@ class KnightPath
     end
   end
 
-  def all_moves(cell)
-    #returns all possible cell coordinates a knight can move to from its current cell in one move
-    delta_x = [1,2,2,1,-1,-2,-2,-1]
-    delta_y = [2,1,-1,-2,-2,-1,1,2]
-    result = []
-    i = 0
-    while i < delta_x.length
-      result << [ cell[0] + delta_x[i], cell[1] + delta_y[i] ]
-      i += 1
-    end
-    result
+  def possible_moves(cell)
+    #given a cell, return an array of possible moves
+    all_moves(cell).select{ |move| board.contains?(move) }
   end
 
   private
@@ -61,6 +48,19 @@ class KnightPath
       result.unshift(destination.position)
       break if destination.position == source.position
       destination = destination.previous
+    end
+    result
+  end
+
+  def all_moves(cell)
+    #returns all possible cell coordinates a knight can move to from its current cell in one move
+    delta_x = [1,2,2,1,-1,-2,-2,-1]
+    delta_y = [2,1,-1,-2,-2,-1,1,2]
+    result = []
+    i = 0
+    while i < delta_x.length
+      result << [ cell[0] + delta_x[i], cell[1] + delta_y[i] ]
+      i += 1
     end
     result
   end
