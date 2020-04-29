@@ -1,8 +1,8 @@
 class KnightPath
-  attr_reader :start_point, :board
+  attr_reader :start_position, :board
 
   def initialize(args)
-    @start_point = create_cell(args)
+    @start_position = create_cell(args)
     @board = args.fetch("board")
   end
 
@@ -13,25 +13,26 @@ class KnightPath
     all_moves(position).select{ |move| board.contains?(move) }
   end
 
-  def shortest_path(end_point)
+  def shortest_path(end_position)
     #returns shortest path from start to end
     queue = []
-    queue << start_point
+    visited_positions = []
+    queue << start_position
     
     while queue.length > 0
       puts "queue length: #{queue.length}"
       #dequeue and see if current_position is the destination
-      current_point = queue.shift
-      if current_point.position == end_point
-        return path(start_point, current_point)
+      current_position = queue.shift
+      if current_position.position == end_position
+        return path(start_position, current_position)
       else
-        #set current_point's neighbors to all the next available moves
-        current_point.neighbors = possible_moves(current_point.position).map do |move|
-          create_cell({ "previous" => current_point, "position" => move })
+        #set current_position's neighbors to all the next available moves
+        current_position.neighbors = possible_moves(current_position.position).map do |move|
+          create_cell({ "previous" => current_position, "position" => move })
         end
 
         #enqueue the neighbors
-        current_point.neighbors.each{ |neighbor| queue << neighbor }
+        current_position.neighbors.each{ |neighbor| queue << neighbor }
       end
     end
   end
@@ -51,12 +52,12 @@ class KnightPath
 
   private
 
-  def path(start_point, end_point)
+  def path(source, destination)
     result = []
     loop do
-      result.unshift(end_point.position)
-      break if end_point.position == start_point.position
-      end_point = end_point.previous
+      result.unshift(destination.position)
+      break if destination.position == source.position
+      destination = destination.previous
     end
     result
   end
