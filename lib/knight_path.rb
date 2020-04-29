@@ -20,10 +20,9 @@ class KnightPath
     queue << start_cell
     
     while queue.length > 0
-      puts "queue length: #{queue.length}"
       #dequeue
       current_cell = queue.shift
-      #visited_cells << current_cell.position
+      visited_cells << current_cell.position
 
       if current_cell.position == end_cell
         return path(start_cell, current_cell)
@@ -33,8 +32,10 @@ class KnightPath
           create_cell({ "previous" => current_cell, "position" => move })
         end
 
-        #enqueue the neighbors
-        current_cell.neighbors.each{ |neighbor| queue << neighbor }
+        #enqueue the neighbors that have not been visited yet
+        current_cell.neighbors.each do |neighbor| 
+          queue << neighbor unless visited_cells.include?(neighbor.position)
+        end
       end
     end
   end
