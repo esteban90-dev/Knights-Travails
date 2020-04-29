@@ -19,6 +19,7 @@ class KnightPath
     queue << start_point
     
     while queue.length > 0
+      puts "queue length: #{queue.length}"
       #dequeue and see if current_position is the destination
       current_point = queue.shift
       if current_point.position == end_point
@@ -29,18 +30,11 @@ class KnightPath
           create_cell({ "previous" => current_point, "position" => move })
         end
 
-        #current_point.neighbors.each{ |neighbor| puts neighbor.previous }
-        
         #enqueue the neighbors
         current_point.neighbors.each{ |neighbor| queue << neighbor }
-
-        
       end
     end
   end
-
-  
-
 
   def all_moves(position)
     #returns all possible cell coordinates a knight can move to from its current position in one move
@@ -60,7 +54,7 @@ class KnightPath
   def path(start_point, end_point)
     result = []
     loop do
-      result << end_point.position
+      result.unshift(end_point.position)
       break if end_point.position == start_point.position
       end_point = end_point.previous
     end
