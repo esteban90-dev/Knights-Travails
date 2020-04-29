@@ -1,5 +1,5 @@
 class Cell
-  attr_reader :parent, :position
+  attr_reader :previous, :position
   attr_accessor :neighbors
 
   def initialize(args)
