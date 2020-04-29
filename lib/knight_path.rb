@@ -1,8 +1,8 @@
 class KnightPath
-  attr_reader :source, :board
+  attr_reader :position, :board
 
   def initialize(args)
-    @source = create_cell(args.fetch("position",[0,0]))
+    @position = create_cell(args)
     @board = args.fetch("board")
   end
 
@@ -12,6 +12,34 @@ class KnightPath
     #given a position, return an array of possible moves
     all_moves(position).select{ |move| board.contains?(move) }
   end
+
+  def shortest_path(start_point=position, end_point)
+    #returns shortest path from start to end
+    queue = []
+    queue << start_point
+    
+    while queue.length > 0
+      #dequeue and see if current_position is the destination
+      current_point = queue.shift
+      if current_point.position == end_point
+        return path(start_point, current_point)
+      else
+        #set current_point's neighbors to all the next available moves
+        current_point.neighbors = possible_moves(current_point.position).map do |move|
+          create_cell({ "previous" => current_point, "position" => move })
+        end
+
+        #current_point.neighbors.each{ |neighbor| puts neighbor.previous }
+        
+        #enqueue the neighbors
+        current_point.neighbors.each{ |neighbor| queue << neighbor }
+
+        
+      end
+    end
+  end
+
+  
 
 
   def all_moves(position)
@@ -29,10 +57,18 @@ class KnightPath
 
   private
 
+  def path(start_point, end_point)
+    result = []
+    loop do
+      result << end_point.position
+      break if end_point.position == start_point.position
+      end_point = end_point.previous
+    end
+    result
+  end
+
   def create_cell(input)
-    Cell.new({
-      "position" => input
-    })
+    Cell.new(input)
   end
 
 end
