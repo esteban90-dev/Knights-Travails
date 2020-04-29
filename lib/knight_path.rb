@@ -1,8 +1,8 @@
 class KnightPath
-  attr_reader :position, :board
+  attr_reader :start_point, :board
 
   def initialize(args)
-    @position = create_cell(args)
+    @start_point = create_cell(args)
     @board = args.fetch("board")
   end
 
@@ -13,7 +13,7 @@ class KnightPath
     all_moves(position).select{ |move| board.contains?(move) }
   end
 
-  def shortest_path(start_point=position, end_point)
+  def shortest_path(end_point)
     #returns shortest path from start to end
     queue = []
     queue << start_point
