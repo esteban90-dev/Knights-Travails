@@ -1,4 +1,4 @@
-#Knight's Travails
+# Knight's Travails
 
 This is the [Knight's Travails Project](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby-programming/lessons/knights-travails) from The [Odin Project's](https://www.theodinproject.com/) [Ruby Course](https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby-programming). 
 
